@@ -18,3 +18,32 @@ class Solution {
         return res;
     }
 }
+
+
+# DFS
+# a global variable level to memorize the level of tree and use res to store the most left treenode if the level is the same.
+
+class Solution {
+    
+    int res = 0;
+    int level = -1;
+    
+    public int findBottomLeftValue(TreeNode root) {
+        
+        dfs(root, 0);
+        return res;
+    }
+    
+    public void dfs(TreeNode node, int level){
+        if(node == null) return;
+        if(level > this.level){
+            this.level = level;
+            this.res = node.val;
+        }
+        dfs(node.left, level+1);
+        dfs(node.right, level+1);
+    }
+    
+    
+    
+}
