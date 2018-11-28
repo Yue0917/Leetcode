@@ -1,0 +1,32 @@
+# Union Find
+# if the father is the same, count --
+
+class Solution {
+    public int findCircleNum(int[][] M) {
+        int count = M.length;
+        int[] gid = new int[M.length];
+        for(int i = 0; i < M.length; i++) gid[i] = i;
+        
+        for(int i = 0; i < M.length; i++) {
+            int id = findParent(gid, i);
+            for(int j = 0; j < M[0].length; j++) {
+                if(i == j || M[i][j] == 0) continue;
+                int id0 = findParent(gid, j);
+                if(id0 != id) {
+                    gid[id0] = id;
+                    count--;
+                }
+            }
+        }
+        
+        return count;
+    }
+    
+    int findParent(int[] gid, int id) {
+        while(id != gid[id]) {
+
+            id = gid[id];
+        }
+        return id;
+    }
+}
