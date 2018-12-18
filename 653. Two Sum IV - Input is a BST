@@ -1,0 +1,40 @@
+## BFS
+public boolean findTarget(TreeNode root, int k) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        Queue<TreeNode> q = new LinkedList<>();
+        int index = 0;
+        if(root == null) return false;
+        q.offer(root);
+        while(!q.isEmpty()){
+            int size = q.size();
+            for(int i = 0; i < size; i ++){
+                TreeNode cur = q.poll();
+                map.put(cur.val, index++);
+                if(cur.left != null) q.offer(cur.left);
+                if(cur.right != null) q.offer(cur.right);
+            }
+        }
+        for(int one: map.keySet()){
+            int complement = k - one;
+            if(map.containsKey(complement) && map.get(one) != map.get(complement)) return true;
+        }
+        return false;
+    }
+    
+    
+    
+## DFS
+class Solution {
+    public boolean findTarget(TreeNode root, int k) {
+        HashSet<Integer> set = new HashSet<>();
+        return find(root, k, set);
+    }
+    
+    public boolean find(TreeNode cur, int k, HashSet<Integer> set){
+        if(cur == null) return false;
+        if(set.contains(k-cur.val)) return true;
+        set.add(cur.val);
+        return find(cur.left, k, set) || find(cur.right, k, set);
+    }
+    
+}
