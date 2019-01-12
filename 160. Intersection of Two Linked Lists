@@ -1,0 +1,60 @@
+# Solution 1: Using difference of node counts
+public ListNode getIntersectionNode(ListNode headA, ListNode headB) 
+    {
+        ListNode List1, List2;
+        int L1 = 0, L2 = 0;
+        
+        for(List1 = headA; List1 != null; List1 = List1.next)
+            L1 += 1;
+            
+        for(List2 = headB; List2 != null; List2 = List2.next)
+            L2 += 1;
+        
+        List1 = headA;
+        List2 = headB;
+        int diff = Math.abs(L1 - L2);
+		
+        if(L1 > L2) while(diff-- > 0) List1 = List1.next;
+        if(L2 > L1) while(diff-- > 0) List2 = List2.next;
+        
+        while(List1 != null)
+        {
+            if(List1 == List2)
+                return List1;
+            
+            List1 = List1.next;
+            List2 = List2.next;
+        }
+        return null;
+    }
+    
+# Solution 2: Using two Iterations
+public ListNode getIntersectionNode(ListNode headA, ListNode headB) 
+    {
+        ListNode List1 = headA; 
+        ListNode List2 = headB;
+        
+        while(List1 != List2)
+        {
+            List1 = List1 == null ? headB : List1.next;
+            List2 = List2 == null ? headA : List2.next;
+        }
+        return List1;
+    }
+
+# Solution 3: Using Hash Table
+public ListNode getIntersectionNode(ListNode headA, ListNode headB) 
+    {
+        HashSet<ListNode> set = new HashSet<>();
+        
+        for(ListNode List1 = headA; List1 != null; List1 = List1.next)
+            set.add(List1);
+            
+        for(ListNode List2 = headB; List2 != null; List2 = List2.next)
+        {
+            if(set.contains(List2))
+                return List2;
+        }
+        
+        return null;
+    }
